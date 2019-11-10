@@ -1,13 +1,49 @@
-# Schoolproject
+#Student API
+Simple Student API made for Schoolproject
 
-Small project for teaching purposes.
+##JSON Body
 
-* Wildfly
-* JEE 8 
-* Java 11
-* Git
-* Maven
-* MySQL
+{
+
+    forename: "String",
+    
+    lastName: "String",
+    
+    email: "String"
+}
+## Paths
+
+**GET:**
+
+
+/school/api/students 
+>Returns list of students
+
+/school/api/students?lastName=lastName 
+>Returns list of students with specified last name
+
+/school/api/students/{email}
+>Returns student with specified email
+
+**POST:**
+
+/school/api/students
+>Student-JSON in body, adds a new Student
+
+**PUT:**
+
+/school/api/students/{email}?forename=forename&lastName=lastName
+>Replaces forename and last name of Student with specified email
+
+**PATCH:**
+
+/school/api/students/{email}?forename=forename
+>Replaces forename of Student with specified email
+
+**DELETE:**
+
+/school/api/students/{email}
+>Deletes Student with specified email
 
 ## Wildfly configuration
 
