@@ -1,7 +1,7 @@
-#Student API
+# Student API
 Simple Student API made for Schoolproject
 
-##JSON Body
+## JSON Body
 
 {
 
