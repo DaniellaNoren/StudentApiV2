@@ -2,6 +2,7 @@ package se.alten.schoolproject.rest;
 
 import lombok.NoArgsConstructor;
 import se.alten.schoolproject.dao.SchoolAccessLocal;
+import se.alten.schoolproject.entity.Student;
 import se.alten.schoolproject.model.StudentModel;
 import se.alten.schoolproject.service.StudentMapper;
 
@@ -51,17 +52,10 @@ public class StudentController {
     public Response addStudent(String studentModel) {
         try {
             StudentModel answer = sal.addStudent(studentModel);
+            return this.badResponseBuilder(answer);
 
-            switch (answer.getForename()) {
-                case "empty":
-                    return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"Fill in all details please\"}").build();
-                case "duplicate":
-                    return Response.status(Response.Status.EXPECTATION_FAILED).entity("{\"Email already registered!\"}").build();
-                default:
-                    return Response.ok(answer).build();
-            }
         } catch ( Exception e ) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Email already registered").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("{\"Email already registered\"}").build();
         }
     }
 
@@ -90,6 +84,17 @@ public class StudentController {
                                           @PathParam("email") String email) {
             StudentModel updatedStudent =  sal.updateStudentPartial(forename, email);
             return Response.ok(updatedStudent).build();
+    }
+
+    private Response badResponseBuilder(StudentModel student){
+        switch (student.getForename()) {
+            case "empty":
+                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"Fill in all details please\"}").build();
+            case "duplicate":
+                return Response.status(Response.Status.EXPECTATION_FAILED).entity("{\"Email already registered!\"}").build();
+            default:
+                return Response.ok(student).build();
+        }
     }
 
 

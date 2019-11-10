@@ -56,7 +56,7 @@ public class SchoolDataAccess implements SchoolAccessLocal, SchoolAccessRemote {
         if(student != null)
             return studentMapper.toModel(student);
         else
-            throw new StudentNotFoundException("Student with that email does not exist");
+            throw new StudentNotFoundException("{\"Student with that email does not exist\"}");
 
     }
 
@@ -66,24 +66,32 @@ public class SchoolDataAccess implements SchoolAccessLocal, SchoolAccessRemote {
         if(student != null)
             return studentMapper.toModel(student);
         else
-            throw new StudentNotFoundException("Student with that email does not exist");
+            throw new StudentNotFoundException("{\"Student with that email does not exist\"}");
     }
 
     @Override
     public StudentModel updateStudent(String forename, String lastName, String email) {
         if(forename == null || lastName == null)
-            throw new IncompleteFormException("Please fill in both forename and last name");
+            throw new IncompleteFormException("{\"Please fill in both forename and last name\"}");
 
-        Student updatedStudent = studentTransactionAccess.updateStudent(forename, lastName, email);
-         return studentMapper.toModel(updatedStudent);
+        Student student = studentTransactionAccess.updateStudent(forename, lastName, email);
+
+        if(student == null)
+            throw new StudentNotFoundException("{\"Student with that email does not exist\"}");
+
+         return studentMapper.toModel(student);
     }
 
     @Override
     public StudentModel updateStudentPartial(String forename, String email) {
         if(forename == null)
-            throw new IncompleteFormException("Please fill in forename");
+            throw new IncompleteFormException("{\"Please fill in forename\"}");
 
         Student student = studentTransactionAccess.updateStudentPartial(forename, email);
+
+        if(student == null)
+            throw new StudentNotFoundException("{\"Student with that email does not exist\"}");
+
         return studentMapper.toModel(student);
     }
 }

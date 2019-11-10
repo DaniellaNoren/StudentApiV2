@@ -39,7 +39,7 @@ public class StudentTransaction implements StudentTransactionAccess{
         query.setParameter("email", email);
         List student = query.getResultList();
         if(student.isEmpty()){
-            throw new StudentNotFoundException("Student with that email does not exist");
+            return null;
         }else{
             return (Student)student.get(0);
         }
