@@ -1,6 +1,5 @@
 package se.alten.schoolproject.transaction;
 
-import se.alten.schoolproject.entity.Student;
 import se.alten.schoolproject.entity.Subject;
 
 import javax.ejb.Stateless;
@@ -38,7 +37,6 @@ public class SubjectTransaction implements SubjectTransactionAccess{
     public Subject getSubjectByTitle(String title) {
         Query query = entityManager.createQuery("SELECT s FROM Subject s WHERE s.title = :title");
         query.setParameter("title", title);
-       // query.setHint("javax.persistence.fetchgraph", entityManager.getEntityGraph("subject-entity-graph"));
         List subject = query.getResultList();
         if(subject.isEmpty()){
             return null;

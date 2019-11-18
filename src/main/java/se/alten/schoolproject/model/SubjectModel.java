@@ -16,10 +16,5 @@ public class SubjectModel implements Serializable{
 
     private String title;
     private Set<StudentModel> students;
-
-    public SubjectModel toModel(Subject subjectToAdd) {
-        SubjectModel subjectModel = new SubjectModel();
-        subjectModel.setTitle(subjectToAdd.getTitle());
-        return subjectModel;
-    }
+    private String teacherName;
 }

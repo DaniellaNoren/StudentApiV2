@@ -1,20 +1,40 @@
 # Student API
 Simple Student API made for Schoolproject
 
-## JSON Body
+## JSON Bodies
 
-{
+###Student
+    {
+        forename: "String",
+    
+        lastName: "String",
+    
+        email: "String",
+    
+        subjects: SubjectArray
+    }
 
-    forename: "String",
+###Subject
+    {
     
-    lastName: "String",
+        title: "String",
     
-    email: "String"
-}
-## Paths
+        students: StudentsArray,
+    
+        teacher: Teacher
+    
+    }
+###Teacher
+    {
+        lastName: "String",
+        
+        subjects: SubjectArray
+    }    
+
+
+# Paths
 
 **GET:**
-
 
 /school/api/students 
 >Returns list of students
@@ -25,10 +45,29 @@ Simple Student API made for Schoolproject
 /school/api/students/{email}
 >Returns student with specified email
 
+/school/api/subjects
+>Returns list of subjects
+
+/school/api/subjects/{title}
+>Returns subject with specified title
+
+/school/api/teachers
+>Returns list of teachers
+
+/school/api/Students/{lastName}
+>Returns teacher with specified last name
+
+
 **POST:**
 
 /school/api/students
 >Student-JSON in body, adds a new Student
+
+/school/api/subjects
+>Subject-JSON in body, adds a new Subject
+
+/school/api/teachers
+>Teacher-JSON in body, adds a new Teacher
 
 **PUT:**
 
@@ -40,10 +79,28 @@ Simple Student API made for Schoolproject
 /school/api/students/{email}?forename=forename
 >Replaces forename of Student with specified email
 
+/school/api/students/{email}/{subjectTitle}
+>Adds student to subject with specified title
+
+/school/api/subjects/{title}?newTitle=newTitle
+>Replaces subject-title with new title
+
+/school/api/teachers/{lastName}?newName=newName
+>Replaces last name witch specified new name
+
+/school/api/teachers/{lastName}/{subjectTitle}
+>Adds teacher to subject with specified subject title
+
 **DELETE:**
 
 /school/api/students/{email}
 >Deletes Student with specified email
+
+/school/api/subjects/{title}
+>Deletes Subject with specified title
+
+/school/api/teachers/{lastName}
+>Deletes teacher with specified last name
 
 ## Wildfly configuration
 
@@ -59,6 +116,8 @@ Start Wildfly, and once running, open a new prompt, and go to the bin folder.<br
 Write `jboss-cli -c --file=school.cli`
 
 It should say outcome success. Write `jboss-cli -c --command=:reload` to restart the server.
+
+
 
 
 

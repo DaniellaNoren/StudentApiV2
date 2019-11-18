@@ -26,6 +26,9 @@ public class Subject implements Serializable {
     @ManyToMany(mappedBy = "subjects", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private Set<Student> students = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    private Teacher teacher;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
