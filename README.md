@@ -12,7 +12,7 @@ Simple Student API made for Schoolproject
     
         email: "String",
     
-        subjects: SubjectArray
+        subjects: SubjectArray //optional
     }
 
 ### Subject
@@ -21,7 +21,7 @@ Simple Student API made for Schoolproject
     
         title: "String",
     
-        students: StudentsArray,
+        students: StudentsArray //optional
     
         teacher: Teacher
     
@@ -32,10 +32,38 @@ Simple Student API made for Schoolproject
     {
         lastName: "String",
         
-        subjects: SubjectArray
+        subjects: SubjectArray //optional
     }    
 
+# Notes
 
+Posting entities does not require any specific order. 
+You can create new Subject-entites when creating new Student and vice versa. 
+Ex:
+     
+     {
+     
+        forename: "Per",
+    
+        lastName: "Olofsson",
+    
+        email: "test@test.com",
+    
+        subjects: [
+                    {"title": "German"},
+                    {"title": "Art"}
+                  ]
+    }
+    
+When creating Subject it requires a teacher with at least a name.
+
+    {
+        "title": "History",
+        "teacher": {
+                      "lastName": "Johansson"
+                   }
+    }
+       
 # Paths
 
 **GET:**
