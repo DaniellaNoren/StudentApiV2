@@ -3,7 +3,8 @@ Simple Student API made for Schoolproject
 
 ## JSON Bodies
 
-###Student
+### Student
+
     {
         forename: "String",
     
@@ -14,7 +15,8 @@ Simple Student API made for Schoolproject
         subjects: SubjectArray
     }
 
-###Subject
+### Subject
+
     {
     
         title: "String",
@@ -24,7 +26,9 @@ Simple Student API made for Schoolproject
         teacher: Teacher
     
     }
-###Teacher
+    
+### Teacher
+
     {
         lastName: "String",
         
