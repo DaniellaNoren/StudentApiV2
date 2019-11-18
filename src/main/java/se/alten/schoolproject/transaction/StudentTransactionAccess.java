@@ -1,6 +1,7 @@
 package se.alten.schoolproject.transaction;
 
 import se.alten.schoolproject.entity.Student;
+import se.alten.schoolproject.entity.Subject;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -11,7 +12,8 @@ public interface StudentTransactionAccess {
     Student addStudent(Student studentToAdd);
     Student getStudentByEmail(String email);
     List getStudentsByLastName(String lastName);
-    Student removeStudent(String email);
-    Student updateStudent(String forename, String lastName, String email);
+    Student removeStudent(Student student);
+    Student updateStudent(Student student);
     Student updateStudentPartial(String forename, String email);
+
 }

@@ -1,6 +1,7 @@
 package se.alten.schoolproject.rest;
 
 import lombok.NoArgsConstructor;
+import org.jboss.resteasy.annotations.Body;
 import se.alten.schoolproject.dao.SchoolAccessLocal;
 import se.alten.schoolproject.entity.Student;
 import se.alten.schoolproject.model.StudentModel;
@@ -49,14 +50,9 @@ public class StudentController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({"application/JSON"})
-    public Response addStudent(String studentModel) {
-        try {
-            StudentModel answer = sal.addStudent(studentModel);
-            return this.badResponseBuilder(answer);
-
-        } catch ( Exception e ) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("{\"Email already registered\"}").build();
-        }
+    public Response addStudent(String student) {
+            StudentModel answer = sal.addStudent(student);
+            return Response.ok(answer).build();
     }
 
     @DELETE
@@ -86,16 +82,15 @@ public class StudentController {
             return Response.ok(updatedStudent).build();
     }
 
-    private Response badResponseBuilder(StudentModel student){
-        switch (student.getForename()) {
-            case "empty":
-                return Response.status(Response.Status.NOT_ACCEPTABLE).entity("{\"Fill in all details please\"}").build();
-            case "duplicate":
-                return Response.status(Response.Status.EXPECTATION_FAILED).entity("{\"Email already registered!\"}").build();
-            default:
-                return Response.ok(student).build();
-        }
+    @PATCH
+    @Path("{email}/{title}")
+    @Produces({"application/JSON"})
+    public Response updateSubjectList(@PathParam("title") String title,
+                                          @PathParam("email") String email) {
+        StudentModel updatedStudent =  sal.addStudentToSubject(email, title);
+        return Response.ok(updatedStudent).build();
     }
+
 
 
 }

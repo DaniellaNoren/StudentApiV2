@@ -4,9 +4,9 @@ import javax.ejb.ApplicationException;
 import javax.ws.rs.WebApplicationException;
 
 @ApplicationException
-public class IncompleteFormException extends WebApplicationException {
+public class EntityNotUniqueException extends WebApplicationException {
 
-    public IncompleteFormException(String msg){
+    public EntityNotUniqueException(String msg){
         super(msg);
     }
 }

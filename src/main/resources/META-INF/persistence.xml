@@ -4,6 +4,7 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 <persistence-unit name="school" transaction-type="JTA">
     <jta-data-source>java:/school</jta-data-source>
+<!--    <mapping-file>orm.xml</mapping-file>-->
     <properties>
         <property name="hibernate.archive.autodetection" value="class, hbm" />
         <property name="hibernate.hbm2ddl.auto" value="update" />
@@ -13,5 +14,6 @@
         <property name="openjpa.Log" value="SQL=TRACE" />
         <property name="openjpa.ConnectionFactoryProperties" value="printParameters=true" />
     </properties>
+
 </persistence-unit>
 </persistence>

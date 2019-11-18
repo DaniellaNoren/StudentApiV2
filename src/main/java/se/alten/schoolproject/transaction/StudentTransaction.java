@@ -1,7 +1,6 @@
 package se.alten.schoolproject.transaction;
 
 import se.alten.schoolproject.entity.Student;
-import se.alten.schoolproject.exception.StudentNotFoundException;
 
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Default;
@@ -16,21 +15,16 @@ public class StudentTransaction implements StudentTransactionAccess{
     private EntityManager entityManager;
 
     @Override
-    public List listAllStudents() {
-        Query query = entityManager.createQuery("SELECT s from Student s");
+    public List<Student> listAllStudents() {
+        Query query = entityManager.createQuery("SELECT s from Student s", Student.class);
         return query.getResultList();
     }
 
     @Override
     public Student addStudent(Student studentToAdd) {
-        try {
-            entityManager.persist(studentToAdd);
-            entityManager.flush();
-            return studentToAdd;
-        } catch ( PersistenceException pe ) {
-            studentToAdd.setForename("duplicate");
-            return studentToAdd;
-        }
+        entityManager.persist(studentToAdd);
+        entityManager.flush();
+        return studentToAdd;
     }
 
     @Override
@@ -55,29 +49,19 @@ public class StudentTransaction implements StudentTransactionAccess{
     }
 
     @Override
-    public Student removeStudent(String email) {
-       Student student = this.getStudentByEmail(email);
-
-       Query query = entityManager.createQuery("DELETE FROM Student s WHERE s.email = :email");
-       query.setParameter("email", email).executeUpdate();
+    public Student removeStudent(Student student) {
+       student.removeSubject();
+        entityManager.remove(student);
+        entityManager.flush();
 
        return student;
     }
 
     @Override
-    public Student updateStudent(String forename, String lastName, String email) {
-
-        Query updateQuery = entityManager.createQuery("UPDATE Student s SET s.forename = :forename, s.lastName = :lastName WHERE s.email = :email");
-         updateQuery.setParameter("forename", forename)
-                .setParameter("lastName", lastName)
-                .setParameter("email", email)
-                .executeUpdate();
-
-
-            Student student = this.getStudentByEmail(email);
-            return student;
-
-
+    public Student updateStudent(Student student) {
+        entityManager.merge(student);
+        entityManager.flush();
+        return student;
 
     }
 
@@ -93,4 +77,5 @@ public class StudentTransaction implements StudentTransactionAccess{
             return student;
 
     }
+
 }
